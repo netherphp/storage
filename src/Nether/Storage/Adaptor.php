@@ -40,7 +40,7 @@ class Adaptor {
 	}
 
 	public function
-	Put(string $Path, mixed $Origin):
+	Put(string $Path, mixed $Data):
 	static {
 
 		throw new Error\WriteError($this, $Path);
@@ -61,10 +61,12 @@ class Adaptor {
 	////////////////////////////////////////////////////////////////
 
 	public function
-	GetPath(string $File):
+	GetPath(string $Path):
 	string {
 
-		return sprintf('%s/%s', $this->Root, $File);
+		$Path = ltrim($Path, '/');
+
+		return sprintf('%s/%s', $this->Root, $Path);
 	}
 
 }

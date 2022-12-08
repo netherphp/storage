@@ -19,7 +19,7 @@ class Manager {
 		return;
 	}
 
-	public function
+	protected function
 	Prepare(Datastore $Config):
 	void {
 
@@ -32,6 +32,53 @@ class Manager {
 		$this->Locations->Shove($Inst->Name, $Inst);
 
 		return;
+	}
+
+	////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////
+
+	public function
+	Exists(string $Mount, string $Path):
+	bool {
+
+		if(!$this->Locations->HasKey($Mount))
+		return FALSE;
+
+		return $this->Locations[$Mount]->Exists($Path);
+	}
+
+	public function
+	Get(string $Mount, string $Path):
+	mixed {
+
+		if(!$this->Locations->HasKey($Mount))
+		throw new Error\MountInvalidError($this, $Mount);
+
+		return $this->Locations[$Mount]->Get($Path);
+	}
+
+	public function
+	Put(string $Mount, string $Path, mixed $Data):
+	static {
+
+		if(!$this->Locations->HasKey($Mount))
+		throw new Error\MountInvalidError($this, $Mount);
+
+		$this->Locations[$Mount]->Put($Path, $Data);
+
+		return $this;
+	}
+
+	public function
+	Delete(string $Mount, string $Path):
+	static {
+
+		if(!$this->Locations->HasKey($Mount))
+		throw new Error\MountInvalidError($this, $Mount);
+
+		$this->Locations[$Mount]->Delete($Path);
+
+		return $this;
 	}
 
 }

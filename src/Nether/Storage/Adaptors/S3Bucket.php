@@ -22,7 +22,7 @@ extends Storage\Adaptor {
 		parent::__Construct($Name, $Root);
 
 		$this->Bucket = $Bucket;
-		$this->Client = new Aws\S3\S3Client;
+		//$this->Client = new Aws\S3\S3Client([]);
 
 		return;
 	}
