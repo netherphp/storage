@@ -54,6 +54,9 @@ class Manager {
 		if(!$this->Locations->HasKey($Mount))
 		throw new Error\MountInvalidError($this, $Mount);
 
+		if(str_starts_with($Path, '/'))
+		$Path = ltrim($Path, '/');
+
 		return $this->Locations[$Mount]->Get($Path);
 	}
 
@@ -63,6 +66,9 @@ class Manager {
 
 		if(!$this->Locations->HasKey($Mount))
 		throw new Error\MountInvalidError($this, $Mount);
+
+		if(str_starts_with($Path, '/'))
+		$Path = ltrim($Path, '/');
 
 		$this->Locations[$Mount]->Put($Path, $Data);
 
@@ -75,6 +81,9 @@ class Manager {
 
 		if(!$this->Locations->HasKey($Mount))
 		throw new Error\MountInvalidError($this, $Mount);
+
+		if(str_starts_with($Path, '/'))
+		$Path = ltrim($Path, '/');
 
 		$this->Locations[$Mount]->Delete($Path);
 

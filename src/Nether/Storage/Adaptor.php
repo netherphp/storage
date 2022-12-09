@@ -2,7 +2,12 @@
 
 namespace Nether\Storage;
 
+use Nether\Object\Package\PropertyInfoPackage;
+
 class Adaptor {
+
+	use
+	PropertyInfoPackage;
 
 	public string
 	$Name;
