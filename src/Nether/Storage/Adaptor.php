@@ -2,12 +2,7 @@
 
 namespace Nether\Storage;
 
-use Nether\Object\Package\PropertyInfoPackage;
-
 class Adaptor {
-
-	use
-	PropertyInfoPackage;
 
 	public string
 	$Name;
@@ -65,13 +60,6 @@ class Adaptor {
 	////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////
 
-	public function
-	GetPath(string $Path):
-	string {
-
-		$Path = ltrim($Path, '/');
-
-		return sprintf('%s/%s', $this->Root, $Path);
-	}
+	// ...
 
 }

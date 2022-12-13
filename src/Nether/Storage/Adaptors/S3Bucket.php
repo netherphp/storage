@@ -6,8 +6,6 @@ use Aws;
 use Nether\Common;
 use Nether\Storage;
 
-use Throwable;
-
 class S3Bucket
 extends Storage\Adaptor {
 
@@ -67,20 +65,8 @@ extends Storage\Adaptor {
 		];
 	}
 
-	public function
-	GetClient():
-	Aws\S3\S3Client {
-
-		return
-		new Aws\S3\S3Client([
-			'version'     => 'latest',
-			'region'      => $this->Region,
-			'credentials' => [
-				'key'    => $this->PubKey,
-				'secret' => $this->PrivKey
-			]
-		]);
-	}
+	////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////
 
 	public function
 	Exists(string $Path):
@@ -136,5 +122,35 @@ extends Storage\Adaptor {
 		return $Data;
 	}
 
+	public function
+	Delete(string $Path):
+	static {
+
+		$this->Client->DeleteObject([
+			'Bucket' => $this->Bucket,
+			'ACL'    => $this->ACL,
+			'Key'    => ltrim($Path, '/')
+		]);
+
+		return $this;
+	}
+
+	////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////
+
+	public function
+	GetClient():
+	Aws\S3\S3Client {
+
+		return
+		new Aws\S3\S3Client([
+			'version'     => 'latest',
+			'region'      => $this->Region,
+			'credentials' => [
+				'key'    => $this->PubKey,
+				'secret' => $this->PrivKey
+			]
+		]);
+	}
 
 }

@@ -14,6 +14,9 @@ extends Storage\Adaptor {
 		return;
 	}
 
+	////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////
+
 	public function
 	Exists(string $Path):
 	bool {
@@ -66,6 +69,33 @@ extends Storage\Adaptor {
 		file_put_contents($Fullpath, $Data);
 
 		return $this;
+	}
+
+	public function
+	Delete(string $Path):
+	static {
+
+		$Fullpath = $this->GetPath($Path);
+		$Dir = dirname($Fullpath);
+
+		if(!is_writable($Dir))
+		throw new Storage\Error\DeleteError($this, $Dir);
+
+		unlink($Fullpath);
+
+		return $this;
+	}
+
+	////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////
+
+	public function
+	GetPath(string $Path):
+	string {
+
+		$Path = ltrim($Path, '/');
+
+		return sprintf('%s/%s', $this->Root, $Path);
 	}
 
 }
