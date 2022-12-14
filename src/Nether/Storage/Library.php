@@ -11,33 +11,16 @@ extends Common\Library {
 	public const
 	ConfStorageLocations = 'Nether.Storage.Locations';
 
-	static public function
-	Init(...$Argv):
+	////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////
+
+	public function
+	OnLoad(...$Argv):
 	void {
 
-		static::OnInit(...$Argv);
-		return;
-	}
-
-	static public function
-	InitDefaultConfig(?Datastore $Config=NULL):
-	Datastore {
-
-		if($Config === NULL)
-		$Config = new Datastore;
-
-		$Config->BlendRight([
+		static::$Config->BlendRight([
 			static::ConfStorageLocations => []
 		]);
-
-		return $Config;
-	}
-
-	static public function
-	OnInit(?Datastore $Config=NULL, ...$Argv):
-	void {
-
-		static::InitDefaultConfig($Config);
 
 		return;
 	}
