@@ -3,7 +3,7 @@
 namespace Nether\Storage;
 
 use Nether\Common;
-use Nether\Object\Datastore;
+use Nether\Common\Datastore;
 
 class Library
 extends Common\Library {
