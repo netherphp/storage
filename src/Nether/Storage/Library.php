@@ -9,7 +9,8 @@ class Library
 extends Common\Library {
 
 	public const
-	ConfStorageLocations = 'Nether.Storage.Locations';
+	ConfStorageLocations       = 'Nether.Storage.Locations',
+	ConfStorageDefaultLocation = 'Nether.Storage.DefaultLocation';
 
 	////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////
@@ -19,7 +20,8 @@ extends Common\Library {
 	void {
 
 		static::$Config->BlendRight([
-			static::ConfStorageLocations => []
+			static::ConfStorageDefaultLocation => 'Default',
+			static::ConfStorageLocations       => []
 		]);
 
 		return;

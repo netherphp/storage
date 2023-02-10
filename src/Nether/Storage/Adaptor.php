@@ -57,6 +57,48 @@ class Adaptor {
 		return $this;
 	}
 
+	public function
+	Size(string $Path):
+	int {
+
+		throw new Error\ReadError($this, $Path);
+
+		return 0;
+	}
+
+	////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////
+
+	public function
+	GetDirPath(string $Path):
+	string {
+
+		$Dir = dirname($Path);
+
+		if($Dir === '.')
+		$Dir = '';
+
+		return $Dir;
+	}
+
+	public function
+	GetFileObject(string $Path):
+	File {
+
+		return new File($this, $Path);
+	}
+
+	public function
+	GetStorageURL(string $Path):
+	string {
+
+		return sprintf(
+			'storage://%s/%s',
+			$this->Name,
+			$Path
+		);
+	}
+
 	////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////
 
