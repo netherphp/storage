@@ -8,6 +8,15 @@ use Nether\Storage;
 class DOBucket
 extends Storage\Adaptors\S3Bucket {
 
+	protected function
+	OnReady():
+	void {
+
+		$this->URL ??= 'https://{Bucket}.{Region}.digitaloceanspaces.com/{Path}';
+
+		return;
+	}
+
 	public function
 	GetClient():
 	Aws\S3\S3Client {

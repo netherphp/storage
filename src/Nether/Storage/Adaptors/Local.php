@@ -9,15 +9,6 @@ class Local
 extends Storage\Adaptor {
 
 	public function
-	__Construct(string $Name, string $Root) {
-		parent::__Construct($Name, $Root);
-		return;
-	}
-
-	////////////////////////////////////////////////////////////////
-	////////////////////////////////////////////////////////////////
-
-	public function
 	Exists(string $Path):
 	bool {
 

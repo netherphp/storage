@@ -6,14 +6,16 @@ use Nether\Common\Datastore;
 
 class Manager {
 
-	public Datastore
+	static public Datastore
 	$Locations;
 
 	public function
-	__Construct(Datastore $Config) {
+	__Construct(?Datastore $Config=NULL) {
 
-		$this->Locations = new Datastore;
+		if(!isset(static::$Locations))
+		static::$Locations = new Datastore;
 
+		if($Config !== NULL)
 		$this->Prepare($Config);
 
 		return;
@@ -29,7 +31,7 @@ class Manager {
 		if($Found)
 		foreach($Found as $Inst)
 		if($Inst instanceof Adaptor)
-		$this->Locations->Shove($Inst->Name, $Inst);
+		static::$Locations->Shove($Inst->Name, $Inst);
 
 		return;
 	}
@@ -38,39 +40,53 @@ class Manager {
 	////////////////////////////////////////////////////////////////
 
 	public function
+	Location(string $Mount):
+	?Adaptor {
+
+		return static::$Locations[$Mount];
+	}
+
+	public function
+	HasLocation(string $Mount):
+	bool {
+
+		return static::$Locations->HasKey($Mount);
+	}
+
+	public function
 	Exists(string $Mount, string $Path):
 	bool {
 
-		if(!$this->Locations->HasKey($Mount))
+		if(!static::$Locations->HasKey($Mount))
 		return FALSE;
 
-		return $this->Locations[$Mount]->Exists($Path);
+		return static::$Locations[$Mount]->Exists($Path);
 	}
 
 	public function
 	Get(string $Mount, string $Path):
 	mixed {
 
-		if(!$this->Locations->HasKey($Mount))
+		if(!static::$Locations->HasKey($Mount))
 		throw new Error\MountInvalidError($this, $Mount);
 
 		if(str_starts_with($Path, '/'))
 		$Path = ltrim($Path, '/');
 
-		return $this->Locations[$Mount]->Get($Path);
+		return static::$Locations[$Mount]->Get($Path);
 	}
 
 	public function
 	Put(string $Mount, string $Path, mixed $Data):
 	static {
 
-		if(!$this->Locations->HasKey($Mount))
+		if(!static::$Locations->HasKey($Mount))
 		throw new Error\MountInvalidError($this, $Mount);
 
 		if(str_starts_with($Path, '/'))
 		$Path = ltrim($Path, '/');
 
-		$this->Locations[$Mount]->Put($Path, $Data);
+		static::$Locations[$Mount]->Put($Path, $Data);
 
 		return $this;
 	}
@@ -79,13 +95,13 @@ class Manager {
 	Delete(string $Mount, string $Path):
 	static {
 
-		if(!$this->Locations->HasKey($Mount))
+		if(!static::$Locations->HasKey($Mount))
 		throw new Error\MountInvalidError($this, $Mount);
 
 		if(str_starts_with($Path, '/'))
 		$Path = ltrim($Path, '/');
 
-		$this->Locations[$Mount]->Delete($Path);
+		static::$Locations[$Mount]->Delete($Path);
 
 		return $this;
 	}

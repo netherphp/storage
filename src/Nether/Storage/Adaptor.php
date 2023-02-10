@@ -10,13 +10,26 @@ class Adaptor {
 	public string
 	$Root;
 
+	public ?string
+	$URL;
+
 	////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////
 
 	public function
-	__Construct(string $Name, string $Root='/') {
+	__Construct(string $Name, string $Root='/opt/data', ?string $URL=NULL) {
 		$this->Name = $Name;
 		$this->Root = $Root;
+		$this->URL = $URL;
+
+		$this->OnReady();
+		return;
+	}
+
+	protected function
+	OnReady():
+	void {
+
 		return;
 	}
 
@@ -97,6 +110,15 @@ class Adaptor {
 			$this->Name,
 			$Path
 		);
+	}
+
+	public function
+	GetPublicURL(string $Path):
+	string {
+
+		$Path = str_replace('{Path}', $Path, $this->URL);
+
+		return $Path;
 	}
 
 	////////////////////////////////////////////////////////////////

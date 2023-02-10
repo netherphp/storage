@@ -25,6 +25,9 @@ extends Storage\Adaptor {
 	protected string
 	$Region;
 
+	protected string
+	$ACL;
+
 	protected
 	$Client;
 
@@ -36,10 +39,13 @@ extends Storage\Adaptor {
 		string $PrivKey,
 		string $Region,
 		string $ACL=self::AccessPublic,
-		string $Root='/'
+		string $Root='/',
+		?string $URL=NULL
 	) {
 
-		parent::__Construct($Name, $Root);
+		$this->Name = $Name;
+		$this->Root = $Root;
+		$this->URL = $URL;
 
 		$this->Bucket = $Bucket;
 		$this->PubKey = $PubKey;
@@ -48,6 +54,7 @@ extends Storage\Adaptor {
 		$this->ACL = $ACL;
 		$this->Client = $this->GetClient();
 
+		$this->OnReady();
 		return;
 	}
 
@@ -117,7 +124,7 @@ extends Storage\Adaptor {
 		////////
 
 		$Data = $Result['Body']->GetContents();
-		var_dump($Data);
+		//var_dump($Data);
 
 		return $Data;
 	}
@@ -133,6 +140,18 @@ extends Storage\Adaptor {
 		]);
 
 		return $this;
+	}
+
+	public function
+	Size(string $Path):
+	int {
+
+		$Head = $this->Client->HeadObject([
+			'Bucket' => $this->Bucket,
+			'Key'    => ltrim($Path, '/')
+		]);
+
+		return $Head['ContentLength'];
 	}
 
 	////////////////////////////////////////////////////////////////
@@ -151,6 +170,26 @@ extends Storage\Adaptor {
 				'secret' => $this->PrivKey
 			]
 		]);
+	}
+
+	public function
+	GetPublicURL(string $Path):
+	string {
+
+		$Path = parent::GetPublicURL($Path);
+
+		$Tokens = [
+			'{Bucket}' => $this->Bucket,
+			'{Region}' => $this->Region
+		];
+
+		$Path = array_reduce(
+			array_keys($Tokens),
+			fn(string $P, string $T)=> str_replace($T, $Tokens[$T], $P),
+			$Path
+		);
+
+		return $Path;
 	}
 
 }
