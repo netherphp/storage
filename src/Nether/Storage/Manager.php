@@ -106,4 +106,48 @@ class Manager {
 		return $this;
 	}
 
+	////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////
+
+	static public function
+	GetAdaptorByURL(string $URL):
+	?Adaptor {
+
+		$RegEx = '#storage://([^/]+)#';
+		$Found = NULL;
+
+		if(!preg_match($RegEx, $URL, $Found))
+		return NULL;
+
+		if(!static::$Locations->HasKey([$Found[1]]))
+		return NULL;
+
+		return static::$Locations->Get($Found[1]);
+	}
+
+	static public function
+	GetFileByURL(string $URL):
+	?File {
+
+		$RegEx = '#storage://([^/]+)(/.+)#';
+		$Found = NULL;
+
+		if(!preg_match($RegEx, $URL, $Found))
+		return NULL;
+
+		if(!static::$Locations->HasKey($Found[1]))
+		return NULL;
+
+		$Storage = static::$Locations[$Found[1]];
+
+		if(!$Storage)
+		return NULL;
+
+		$File = $Storage->GetFileObject(ltrim($Found[2], '/'));
+		if(!$File)
+		return NULL;
+
+		return $File;
+	}
+
 }
