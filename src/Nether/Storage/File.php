@@ -3,6 +3,7 @@
 namespace Nether\Storage;
 
 use FileEye;
+use Nether\Common;
 
 use Exception;
 
@@ -47,6 +48,13 @@ class File {
 	}
 
 	public function
+	GetPublicURL():
+	string {
+
+		return $this->Storage->GetPublicURL($this->Path);
+	}
+
+	public function
 	GetType():
 	string {
 
@@ -69,6 +77,15 @@ class File {
 	}
 
 	public function
+	GetSizeReadable():
+	string {
+
+		$Bytes = new Common\Units\Bytes($this->GetSize());
+
+		return $Bytes->Get();
+	}
+
+	public function
 	IsImage():
 	bool {
 
@@ -86,6 +103,33 @@ class File {
 		return FALSE;
 	}
 
+	public function
+	SetName(string $Name):
+	static {
+
+		$this->Path = sprintf('%s/%s', dirname($this->Path), $Name);
+		return $this;
+	}
+
+	public function
+	SetPath(string $Path):
+	static {
+
+		$this->Path = $Path;
+		return $this;
+	}
+
+	public function
+	New(string $Name):
+	static {
+
+		$Output = clone($this);
+		$Output->SetName($Name);
+
+		return $Output;
+	}
+
+
 	////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////
 
@@ -94,6 +138,14 @@ class File {
 	mixed {
 
 		return $this->Storage->Get($this->Path);
+	}
+
+	public function
+	Write(string $Data):
+	void {
+
+		$this->Storage->Put($this->Path, $Data);
+		return;
 	}
 
 	public function
