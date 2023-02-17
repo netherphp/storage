@@ -2,6 +2,8 @@
 
 namespace Nether\Storage;
 
+use Nether\Common;
+
 class Adaptor {
 
 	public string
@@ -44,6 +46,16 @@ class Adaptor {
 	}
 
 	public function
+	List(string $Path):
+	Common\Datastore {
+
+		throw new Error\ReadError($this, $Path);
+
+		$Output = new Common\Datastore;
+		return $Output;
+	}
+
+	public function
 	Get(string $Path):
 	mixed {
 
@@ -77,6 +89,34 @@ class Adaptor {
 		throw new Error\ReadError($this, $Path);
 
 		return 0;
+	}
+
+	public function
+	Rename(string $Old, string $New):
+	static {
+
+		throw new Error\WriteError($this, $New);
+
+		return $this;
+	}
+
+	public function
+	Chmod(string $Path, int $Mode):
+	static {
+
+		throw new Error\WriteError($this, $Path);
+
+
+		return $this;
+	}
+
+	public function
+	Append(string $Path, mixed $Data):
+	static {
+
+		throw new Error\WriteError($this, $Path);
+
+		return $this;
 	}
 
 	////////////////////////////////////////////////////////////////
@@ -119,6 +159,19 @@ class Adaptor {
 		$Path = str_replace('{Path}', $Path, $this->URL);
 
 		return $Path;
+	}
+
+	public function
+	Unroot(string $Path):
+	string {
+
+		$Result = ltrim(preg_replace(
+			sprintf('#^%s#', preg_quote($this->Root, '#')),
+			'',
+			$Path
+		),'/');
+
+		return $Result;
 	}
 
 	////////////////////////////////////////////////////////////////

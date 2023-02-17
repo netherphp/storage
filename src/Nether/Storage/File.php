@@ -35,7 +35,10 @@ class File {
 	?string {
 
 		if(str_contains($this->Path, '.'))
-		return substr($this->Path, (strrpos($this->Path, '.') + 1));
+		return strtolower(substr(
+			$this->Path,
+			(strrpos($this->Path, '.') + 1)
+		));
 
 		NULL;
 	}
@@ -52,6 +55,13 @@ class File {
 	string {
 
 		return $this->Storage->GetPublicURL($this->Path);
+	}
+
+	public function
+	GetParentDirectory():
+	string {
+
+		return dirname($this->Path);
 	}
 
 	public function
@@ -145,6 +155,8 @@ class File {
 	void {
 
 		$this->Storage->Put($this->Path, $Data);
+		$this->Storage->Chmod($this->Path, 0666);
+
 		return;
 	}
 

@@ -89,6 +89,23 @@ extends Storage\Adaptor {
 		return $this;
 	}
 
+	public function
+	List(string $Path):
+	Common\Datastore {
+
+		$Fullpath = $this->GetPath($Path);
+		$Output = new Common\Datastore;
+		$Indexer = new Common\Filesystem\Indexer($Fullpath);
+		$File = NULL;
+
+		foreach($Indexer as $File)
+		$Output->Push($this->Unroot(
+			$File->GetPathname()
+		));
+
+		return $Output;
+	}
+
 	////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////
 
@@ -132,9 +149,7 @@ extends Storage\Adaptor {
 	Chmod(string $Path, int $Mode):
 	static {
 
-		$UMask = umask(0);
-		chmod($this->GetPath($Path), $Mode);
-		umask($UMask);
+		Common\Filesystem\Util::Chmod($this->GetPath($Path), $Mode);
 
 		return $this;
 	}
