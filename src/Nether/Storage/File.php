@@ -31,6 +31,13 @@ class File {
 	////////////////////////////////////////////////////////////////
 
 	public function
+	Exists():
+	bool {
+
+		return $this->Storage->Exists($this->Path);
+	}
+
+	public function
 	GetExtension():
 	?string {
 
