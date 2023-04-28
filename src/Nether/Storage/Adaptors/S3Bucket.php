@@ -192,4 +192,11 @@ extends Storage\Adaptor {
 		return $Path;
 	}
 
+	public function
+	GetAdaptorDescription():
+	string {
+
+		return sprintf('%s (%s)', $this->Name, $this->Bucket);
+	}
+
 }

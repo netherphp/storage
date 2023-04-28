@@ -54,6 +54,13 @@ class Manager {
 	}
 
 	public function
+	GetLocations():
+	Datastore {
+
+		return static::$Locations->Map(fn($L)=> $L);
+	}
+
+	public function
 	Exists(string $Mount, string $Path):
 	bool {
 

@@ -162,6 +162,13 @@ class Adaptor {
 	}
 
 	public function
+	GetAdaptorDescription():
+	string {
+
+		return $this->Name;
+	}
+
+	public function
 	Unroot(string $Path):
 	string {
 
