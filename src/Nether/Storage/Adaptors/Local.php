@@ -5,6 +5,8 @@ namespace Nether\Storage\Adaptors;
 use Nether\Common;
 use Nether\Storage;
 
+use FilesystemIterator;
+
 class Local
 extends Storage\Adaptor {
 
@@ -182,6 +184,18 @@ extends Storage\Adaptor {
 		throw new Storage\Error\ReadError($this, $Fullpath);
 
 		return filesize($Fullpath);
+	}
+
+	public function
+	Count(string $Path):
+	int {
+
+		$Iter = new FilesystemIterator(
+			$this->GetPath($Path),
+			FilesystemIterator::SKIP_DOTS
+		);
+
+		return iterator_count($Iter);
 	}
 
 }

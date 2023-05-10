@@ -154,6 +154,20 @@ extends Storage\Adaptor {
 		return $Head['ContentLength'];
 	}
 
+	public function
+	Count(string $Path):
+	int {
+
+		$List = $this->Client->ListObjectsV2([
+			'Bucket'  => $this->Bucket,
+			'Prefix'  => $Path
+		]);
+
+		//Common\Dump::Var($List, TRUE);
+
+		return $List['KeyCount'];
+	}
+
 	////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////
 

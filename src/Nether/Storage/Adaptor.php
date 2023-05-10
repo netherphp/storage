@@ -92,6 +92,15 @@ class Adaptor {
 	}
 
 	public function
+	Count(string $Path):
+	int {
+
+		throw new Error\ReadError($this, $Path);
+
+		return 0;
+	}
+
+	public function
 	Rename(string $Old, string $New):
 	static {
 

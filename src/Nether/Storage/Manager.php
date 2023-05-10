@@ -113,6 +113,19 @@ class Manager {
 		return $this;
 	}
 
+	public function
+	Count(string $Mount, string $Path):
+	int {
+
+		if(!static::$Locations->HasKey($Mount))
+		throw new Error\MountInvalidError($this, $Mount);
+
+		if(str_starts_with($Path, '/'))
+		$Path = ltrim($Path, '/');
+
+		return static::$Locations[$Mount]->Count($Path);
+	}
+
 	////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////
 
