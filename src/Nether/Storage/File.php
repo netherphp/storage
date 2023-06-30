@@ -9,6 +9,10 @@ use Exception;
 
 class File {
 
+	const
+	TypeFile = 'file',
+	TypeImg  = 'img';
+
 	public Adaptor
 	$Storage;
 
