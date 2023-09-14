@@ -198,5 +198,16 @@ extends Storage\Adaptor {
 		return iterator_count($Iter);
 	}
 
+	public function
+	MkDir(string $Path):
+	static {
+
+		$Fullpath = $this->GetPath($Path);
+
+		Common\Filesystem\Util::MkDir($Fullpath);
+
+		return $this;
+	}
+
 }
 
