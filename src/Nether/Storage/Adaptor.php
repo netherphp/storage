@@ -39,6 +39,16 @@ class Adaptor {
 	////////////////////////////////////////////////////////////////
 
 	public function
+	ReadMimeType(string $Path):
+	?string {
+
+		throw new Error\ReadError($this, $Path);
+
+		return NULL;
+	}
+
+
+	public function
 	Exists(string $Path):
 	bool {
 

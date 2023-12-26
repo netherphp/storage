@@ -112,6 +112,13 @@ extends Storage\Adaptor {
 	////////////////////////////////////////////////////////////////
 
 	public function
+	ReadMimeType(string $Path):
+	string {
+
+		return mime_content_type($this->GetPath($Path));
+	}
+
+	public function
 	GetPath(string $Path):
 	string {
 
