@@ -58,7 +58,7 @@ class File {
 			(strrpos($this->Path, '.') + 1)
 		));
 
-		NULL;
+		return NULL;
 	}
 
 	public function
