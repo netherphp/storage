@@ -76,6 +76,9 @@ extends Storage\Adaptor {
 
 		////////
 
+		if(!file_exists($Fullpath))
+		return $this;
+
 		if(is_dir($Fullpath)) {
 			Common\Filesystem\Util::RmDir($Fullpath);
 			return $this;
@@ -196,6 +199,11 @@ extends Storage\Adaptor {
 	public function
 	Count(string $Path):
 	int {
+
+		if(!$this->Exists($Path))
+		return 0;
+
+		//////
 
 		$Iter = new FilesystemIterator(
 			$this->GetPath($Path),
